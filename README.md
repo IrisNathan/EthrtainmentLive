@@ -14,7 +14,7 @@
 
 ## About
 
-A Decentralized live streaming platform
+This project will be a platform where you can view major (and creator) events that are live streamed. The event streamer will sell NFTs as proof of purchase for entry to view the livestream. We imagine major sports events, gaming events, concerts, festivals, conferences, e-learning, and the creator community utilizing the platform. We feel this will help attract a wider audience even if some of the events are in person as well. The NFTs as tickets diminishes counterfeit ticket sales since the NFT is secure on the blockchain. 
 
 ## Tech
 
