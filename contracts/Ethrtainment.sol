@@ -42,7 +42,7 @@ struct CreatorEvents {
 
    mapping(address => mapping(uint256 => uint256)) buyers;
 
-constructor() {
+constructor() ERC1155(""){
   ethrtainment = payable(msg.sender);
  }
 
@@ -58,10 +58,11 @@ function isCCVIP(uint256 _eventId) public view returns(bool) {
 }
 
 // Allows viewer to tip content creator
-function tipping(uint256 tip) payable public {
+function tipping(uint256 tip) payable public returns(uint256){
   // Verifies that the sender has enough funds before sending in Wei
   require(msg.sender.balance > tip, "Not enough funds to tip");
   payable(content_creator).transfer(tip); 
+  return tip;
 }
 
 
