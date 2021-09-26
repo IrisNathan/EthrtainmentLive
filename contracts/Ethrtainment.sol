@@ -9,6 +9,7 @@ import "hardhat/console.sol";
 
 contract EthrtainmentLive is ERC1155 {  
   address payable ethrtainment;
+  address payable content_creator;
   uint contentCreatorStreamFee = 0.006 ether;
   // uint majorEventStreamFee = 1 ether;
   // uint TICKET_PRICE_EVENT = 0.02 ether;
@@ -30,7 +31,7 @@ contract EthrtainmentLive is ERC1155 {
 
 struct CreatorEvents {
   // hard code address to test
-  address payable content_creator;
+  
   bytes16 streamName;
   uint256 eventId;
   address mintEventContract;
@@ -54,6 +55,13 @@ function isCCVIP(uint256 _eventId) public view returns(bool) {
   if( _isCCVIP > 0) {
     return true;
   }
+}
+
+// Allows viewer to tip content creator
+function tipping(uint256 tip) payable public {
+  // Verifies that the sender has enough funds before sending in Wei
+  require(msg.sender.balance > tip, "Not enough funds to tip");
+  payable(content_creator).transfer(tip); 
 }
 
 
