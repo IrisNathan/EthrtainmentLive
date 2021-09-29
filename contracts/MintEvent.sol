@@ -1,27 +1,26 @@
 //SPDX-License-Identifier: Unlicense
 pragma solidity ^0.8.4;
 
-import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
-// import "@openzeppelin/contracts/utils/Counters.sol";
+import "@openzeppelin/contracts/utils/Counters.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
+import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 
-contract MintEvent is ERC1155, Ownable {
-  uint public constant EVENT_ADMISSION = 0;
-  uint public constant VIP_TICKET = 1;
-  // Content Creator viewers that pay for special privilidges
-  uint public constant CCVIP_PATRONS = 2;
+contract MintEvent is ERC721URIStorage {
+  using Counters for Counters.Counter;
+  Counters.Counter private _tokenIds;
+  address contractAddress;
 
-  constructor() ERC1155("") {
-    _mint(msg.sender, EVENT_ADMISSION,  100, "");
-    _mint(msg.sender, VIP_TICKET,  25, "");
-    _mint(msg.sender, CCVIP_PATRONS,  0, "");
+  constructor(address ethrtainAddress) ERC721("EthrLive", "ETL"){
+    contractAddress = ethrtainAddress;
   }
 
-  function mint(address account, uint id, uint amount) public onlyOwner {
-    _mint(account, id, amount, "");
-  }
-  function burn (address account, uint id, uint amount) public {
-    require(msg.sender == account);
-    _burn(account, id, amount);
+  function createNFT(string memory tokenURI) public returns(uint256){
+    _tokenIds.increment();
+    uint256 newItemId = _tokenIds.current();
+
+    _mint(msg.sender, newItemId);
+    _setTokenURI(newItemId, tokenURI);
+    setApprovalForAll(contractAddress, true);
+    return newItemId;
   }
 }
