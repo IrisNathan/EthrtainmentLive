@@ -13,7 +13,7 @@ contract Ethrtainment is ReentrancyGuard {
     Counters.Counter private _itemsSold;
 
     address payable owner;
-    uint256 streamingFee = 1 ether;
+    uint256 streamingFee = 0.0001 ether;
 
     constructor() {
         owner = payable(msg.sender);
@@ -52,7 +52,7 @@ contract Ethrtainment is ReentrancyGuard {
         uint256 eventPrice
     ) public payable nonReentrant {
         require(msg.value >= streamingFee);
-        require(eventPrice >= 0.02 ether, "Price must be minimum 0.02 ether");
+        require(eventPrice >= 0.0002 ether, "Price must be minimum 0.02 ether");
         _eventId.increment();
         uint256 eventId = _eventId.current();
 
