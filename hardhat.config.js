@@ -22,8 +22,8 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
       chainId: 1337
     },
     rinkeby: {
-      url: 
-      // accounts: [process.env.PRIVATE_KEY],
+      url: process.env.RINKEBY_URL,
+      accounts: [process.env.RINKEBY_PRIVATEKEY],
     },
   },
   solidity: "0.8.4",
