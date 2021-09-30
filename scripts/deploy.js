@@ -21,8 +21,8 @@ async function main() {
 
   console.log("Ethrtainment deployed to:", ethrtain.address);
 
-  const MintEvent = await hre.ether.getContractFactory("MintEvent");
-  const mintEvent = await MintEvent.deploy();
+  const MintEvent = await hre.ethers.getContractFactory("MintEvent");
+  const mintEvent = await MintEvent.deploy(ethrtain.address);
 
   await mintEvent.deployed();
   console.log("MintEvent deployed to: ", mintEvent.address);
