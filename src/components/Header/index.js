@@ -2,8 +2,10 @@ import React from 'react';
 import { Link as ReactRouterLink } from 'react-router-dom';
 import { Container, Navbar, Nav, NavDropdown, Button } from 'react-bootstrap';
 import WalletConnectProvider from '@walletconnect/web3-provider';
+import { providers } from 'ethers';
 import Web3Modal from 'web3modal';
 import img from '../../photos/ethrLogoNoTxt.ico';
+import { button } from './styles/header';
 
 export default function Header() {
   async function connect() {
@@ -58,9 +60,9 @@ export default function Header() {
               </NavDropdown>
             </Nav>
             <Nav>
-              <Nav.Button eventKey={2} href='#memes'>
-                Dank memes
-              </Nav.Button>
+              <Button style={button} onClick={connect}>
+                Connect
+              </Button>
             </Nav>
           </Navbar.Collapse>
         </Container>
