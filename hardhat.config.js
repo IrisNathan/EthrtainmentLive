@@ -1,9 +1,9 @@
-require("@nomiclabs/hardhat-waffle");
-require("dotenv").config();
+require('@nomiclabs/hardhat-waffle');
+require('dotenv').config();
 
 // This is a sample Hardhat task. To learn how to create your own go to
 // https://hardhat.org/guides/create-task.html
-task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
+task('accounts', 'Prints the list of accounts', async (taskArgs, hre) => {
   const accounts = await hre.ethers.getSigners();
 
   for (const account of accounts) {
@@ -17,15 +17,21 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
 /**
  * @type import('hardhat/config').HardhatUserConfig
  */
- module.exports = {
+module.exports = {
   networks: {
     hardhat: {
-      chainId: 1337
+      chainId: 1337,
     },
     rinkeby: {
       url: process.env.RINKEBY_URL,
       accounts: [process.env.RINKEBY_PRIVATEKEY],
     },
   },
-  solidity: "0.8.4",
+  solidity: '0.8.4',
+  paths: {
+    artifacts: './src/artifacts',
+  },
 };
+
+ethrtaimentContract="0x0165878A594ca255338adfa4d48449f69242Eb8F"
+mintEventContract="0xa513E6E4b8f2a923D98304ec87F64353C4D5C853"
