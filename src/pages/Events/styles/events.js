@@ -1,3 +1,10 @@
+export const container = {
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  maxHeight: 'none',
+};
+
 export const rows = {
   marginTop: '50px',
 };
