@@ -1,9 +1,3 @@
-export const body = {
-  color: '#e5e5e5',
-  maxHeight: 'none',
-  width: '100%',
-};
-
 export const container = {
   display: 'flex',
   flexDirection: 'column',
@@ -12,4 +6,5 @@ export const container = {
   maxHeight: 'none',
   padding: '50px',
   margin: '0, 50px, 50px',
+  color: '#e5e5e5'
 };

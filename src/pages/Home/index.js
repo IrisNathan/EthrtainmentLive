@@ -1,5 +1,5 @@
 import React from 'react';
-import { bodyImg, container } from './styles/home';
+import { body, container } from './styles/home';
 import backgroundPic from '../../photos/pexels-luis-quintero-2014773.jpeg';
 
 export default function Home() {
@@ -9,7 +9,8 @@ export default function Home() {
       style={{backgroundImage: `url(${backgroundPic})`,
       backgroundSize: "cover",
       height: "100vh",
-      color: 'white'
+      color: 'white',
+      opacity: '0.7'
     }}>
         <div style={container}>
           <p>
