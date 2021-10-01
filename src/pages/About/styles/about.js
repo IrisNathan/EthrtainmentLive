@@ -13,12 +13,20 @@ export const heading = {
   fontSize: "40px",
   fontWeight: "bold",
   borderBottom: "#30989e 3px solid",
-  width: "10px",
+  marginBottom: "50px",
 }
 
 export const icons = {
   color: "#30989e ",
   fontSize: "100px",
   marginBottom: "50px",
+}
+
+export const rows = {
+  marginBottom: "50px",
+}
+
+export const ptag = {
+  margin: "20px",
 }
 
