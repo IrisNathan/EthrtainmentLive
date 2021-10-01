@@ -1,5 +1,5 @@
 import React from 'react';
-import { body, container } from './styles/home';
+import { container } from './styles/home';
 import backgroundPic from '../../photos/pexels-luis-quintero-2014773.jpeg';
 
 export default function Home() {

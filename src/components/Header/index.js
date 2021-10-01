@@ -3,7 +3,7 @@ import { Link as ReactRouterLink } from 'react-router-dom';
 import { Container, Navbar, Nav, NavDropdown, Button } from 'react-bootstrap';
 import WalletConnectProvider from '@walletconnect/web3-provider';
 import BurnerConnectProvider from '@burner-wallet/burner-connect-provider';
-import Fortmatic from "fortmatic";
+import Fortmatic from 'fortmatic';
 import { providers } from 'ethers';
 import Web3Modal from 'web3modal';
 import img from '../../photos/ethrLogoNoTxt.ico';
@@ -27,7 +27,7 @@ export default function Header() {
       fortmatic: {
         package: Fortmatic, // required
         options: {
-          key: "FORTMATIC_KEY" // required
+          key: 'FORTMATIC_KEY', // required
         },
       },
     };
@@ -45,7 +45,7 @@ export default function Header() {
     <>
       <Navbar collapseOnSelect expand='lg' bg='dark' variant='dark'>
         <Container>
-          <Navbar.Brand href='#home'>
+          <Navbar.Brand href='/'>
             <img
               src={img}
               width='65'
@@ -58,21 +58,10 @@ export default function Header() {
           <Navbar.Toggle aria-controls='responsive-navbar-nav' />
           <Navbar.Collapse id='responsive-navbar-nav'>
             <Nav className='me-auto'>
-              <Nav.Link href='#features'>Features</Nav.Link>
-              <Nav.Link href='#pricing'>Pricing</Nav.Link>
-              <NavDropdown title='Dropdown' id='collasible-nav-dropdown'>
-                <NavDropdown.Item href='#action/3.1'>Action</NavDropdown.Item>
-                <NavDropdown.Item href='#action/3.2'>
-                  Another action
-                </NavDropdown.Item>
-                <NavDropdown.Item href='#action/3.3'>
-                  Something
-                </NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item href='#action/3.4'>
-                  Separated link
-                </NavDropdown.Item>
-              </NavDropdown>
+              <Nav.Link href='/'>Home</Nav.Link>
+              <Nav.Link href='#about'>About</Nav.Link>
+              <Nav.Link href='#events'>Events</Nav.Link>
+              <Nav.Link href='#streaming'>Streaming</Nav.Link>
             </Nav>
             <Nav>
               <Button style={button} onClick={connect}>
