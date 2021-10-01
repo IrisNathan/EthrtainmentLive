@@ -1,6 +1,10 @@
-import React from "react";
-import { Row, Col, Container, Button, Carousel } from "react-bootstrap";
-import { container, rows, heading, ptag, button } from "./styles/stream";
+import React from 'react';
+import { Row, Col, Container, Carousel, Button } from 'react-bootstrap';
+import { container, rows, heading, ptag, button, font} from './styles/stream';
+import streamer1 from '../../photos/streamer1.jpeg';
+import streamer2 from '../../photos/streamer2.jpeg';
+import streamer3 from '../../photos/streamer3.jpeg';
+import streamer4 from '../../photos/streamer4.jpeg';
 
 export default function Stream() {
   return (
@@ -8,56 +12,59 @@ export default function Stream() {
       <div style={container}>
         <Container>
           <Row style={rows}>
-            <Col style={heading}>Start Streamming Now!</Col>
+            <Col style={heading}>Want to stream your event?</Col>
             <p style={ptag}>
-              We have a variety of events going on all the time! Check below to see what is
-              streamming now!
+              Ask us how and get pricing or click below to connect your wallet to start streaming.
             </p>
-          </Row>
-          <Row>
-            <Carousel>
+            <Carousel fade>
               <Carousel.Item>
                 <img
-                  className="d-block w-100"
-                  src="holder.js/800x400?text=First slide&bg=373940"
-                  alt="First slide"
+                  className='d-block w-100'
+                  src={streamer1}
+                  alt='Filming Concert'
                 />
                 <Carousel.Caption>
-                  <h3>First slide label</h3>
-                  <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+                  <h3 style={font}>Stream a Concert</h3>
                 </Carousel.Caption>
               </Carousel.Item>
               <Carousel.Item>
                 <img
-                  className="d-block w-100"
-                  src="holder.js/800x400?text=Second slide&bg=282c34"
-                  alt="Second slide"
+                  className='d-block w-100'
+                  src={streamer2}
+                  alt='Event Filming'
                 />
 
                 <Carousel.Caption>
-                  <h3>Second slide label</h3>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                  <h3 style={font}>Stream Celebrity Events</h3>
                 </Carousel.Caption>
               </Carousel.Item>
               <Carousel.Item>
                 <img
-                  className="d-block w-100"
-                  src="holder.js/800x400?text=Third slide&bg=20232a"
-                  alt="Third slide"
+                  className='d-block w-100'
+                  src={streamer3}
+                  alt='Filming Sports'
                 />
 
                 <Carousel.Caption>
-                  <h3>Third slide label</h3>
-                  <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
+                  <h3 style={font}>Stream Major Sports</h3>
+                </Carousel.Caption>
+              </Carousel.Item>
+              <Carousel.Item>
+                <img
+                  className='d-block w-100'
+                  src={streamer4}
+                  alt='Filming Music'
+                />
+                <Carousel.Caption>
+                  <h3 style={font}>Musicians Can Stream Their Shows</h3>
                 </Carousel.Caption>
               </Carousel.Item>
             </Carousel>
           </Row>
-          <div>
-          <Button style={button} href="#">Start Streaming</Button>
-          </div>
         </Container>
       </div>
+      <div><Button style={button}>Click to Stream</Button></div>
+      
     </>
   );
 }

@@ -3,10 +3,11 @@ export const container = {
   flexDirection: 'column',
   justifyContent: 'center',
   maxHeight: 'none',
+  marginTop: '80px'
 };
 
 export const rows = {
-  marginTop: '50px',
+  marginTop: '80px',
 };
 
 export const heading = {
@@ -22,7 +23,12 @@ export const ptag = {
 };
 
 export const button = {
-  background: "#30989e",
-  marginRight: "10px",
-  marginTop: "10px",
+  background: '#30989e',
+  margin: '30px',
+  padding: '20px',
+  border: 'none',
+};
+
+export const font = {
+  fontWeight: 'Bold'
 }

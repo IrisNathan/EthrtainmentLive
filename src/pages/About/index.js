@@ -8,7 +8,7 @@ export default function About() {
       <div style={container}>
         <Container>
           <Row style={rows}>
-            <Col style={heading}>How EthrtainmentLive works</Col>
+            <Col style={heading}>How EthrtainmentLive Works</Col>
             <p style={font}>
               The Substratum Network is a worldwide collection of nodes that
               securely delivers content without the need of a VPN or Tor. Here’s

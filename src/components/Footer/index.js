@@ -14,12 +14,12 @@ export default function Footer() {
           </li>
           <li>
             <a style={style3} href='#/'>
-              Gallery
+              Events
             </a>
           </li>
           <li>
             <a style={style3} href='#/'>
-                Buy Ticket
+                Buy NFT Ticket
             </a>
           </li>
         </ul>

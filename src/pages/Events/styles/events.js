@@ -22,7 +22,8 @@ export const ptag = {
 };
 
 export const button = {
-  background: "#30989e",
-  marginRight: "10px",
-  marginTop: "10px",
-}
+  background: '#30989e',
+  marginRight: '10px',
+  marginTop: '10px',
+  border: 'none',
+};
