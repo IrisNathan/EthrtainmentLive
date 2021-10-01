@@ -20,3 +20,9 @@ export const ptag = {
   margin: '20px',
   fontSize: '22px',
 };
+
+export const button = {
+  background: "#30989e",
+  marginRight: "10px",
+  marginTop: "10px",
+}
