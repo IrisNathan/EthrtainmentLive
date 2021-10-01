@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link as ReactRouterLink } from 'react-router-dom';
-import { Container, Navbar, Nav, NavDropdown, Button } from 'react-bootstrap';
+import { Container, Navbar, Nav, Button } from 'react-bootstrap';
 import WalletConnectProvider from '@walletconnect/web3-provider';
 import BurnerConnectProvider from '@burner-wallet/burner-connect-provider';
 import Fortmatic from 'fortmatic';
