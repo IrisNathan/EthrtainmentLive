@@ -10,23 +10,26 @@ export const container = {
 };
 
 export const heading = {
-  fontSize: "40px",
-  fontWeight: "bold",
-  borderBottom: "#30989e 3px solid",
-  marginBottom: "50px",
-}
+  fontSize: '40px',
+  fontWeight: 'bold',
+  borderBottom: '#30989e 3px solid',
+  marginBottom: '50px',
+};
 
 export const icons = {
-  color: "#30989e ",
-  fontSize: "100px",
-  marginBottom: "50px",
-}
+  color: '#30989e ',
+  fontSize: '100px',
+  marginBottom: '50px',
+};
 
 export const rows = {
-  marginBottom: "50px",
-}
+  marginBottom: '50px',
+};
 
 export const ptag = {
-  margin: "20px",
-}
+  margin: '20px',
+};
 
+export const font = {
+  fontSize: '22px',
+};
