@@ -1,6 +1,6 @@
 import React from "react";
 import {  Row, Col, Container, Button } from "react-bootstrap";
-import { container, rows, heading, ptag, button } from "./styles/events";
+import { container, rows, heading, ptag, button } from "./styles/stream";
 
 
 export default function Stream() {
