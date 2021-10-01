@@ -1,7 +1,7 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Header, Footer } from './components';
-import { Home } from './pages';
+import { Home, About } from './pages';
 import * as ROUTES from './constants/routes';
 import './App.css';
 
@@ -10,6 +10,7 @@ function App() {
     <div className="App">
       <Header />
       <Home />
+      <About />
       <Footer />
     </div>
   );
