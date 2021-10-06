@@ -9,6 +9,7 @@ export default function Hero() {
       <div
         className='scene' id='home'
         style={{
+          paddingTop: '120px',
           backgroundImage: `url(${backgroundPic})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center center',

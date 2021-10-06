@@ -8,21 +8,11 @@ export const navBar = {
   top: '0',
   left: '0',
   width: '100%',
-  // padding: '0, 1.0rem',
-  background: 'rgba(204, 204, 204, 0.3)',
-  zIndex: '1'
+  background: 'rgba(204, 204, 204, 0.5)',
+  zIndex: '2',
+  fontSize: '20px',
+  padding: '0 20px',
+  color: '#e5e5e5',
 }
 
-
-
-// export const navHead = {
-  // display: 'flex',
-  // justifyContent: 'space-between'
-// }
-
-// export const navBtn = {
-  // background: 'transparent',
-  // border: 'none',
-  // outline: 'none'
-// }
 

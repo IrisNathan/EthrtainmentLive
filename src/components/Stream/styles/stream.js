@@ -3,7 +3,8 @@ export const container = {
   flexDirection: 'column',
   justifyContent: 'center',
   maxHeight: 'none',
-  marginTop: '80px'
+  marginTop: '80px',
+  paddingTop: '100px'
 };
 
 export const rows = {

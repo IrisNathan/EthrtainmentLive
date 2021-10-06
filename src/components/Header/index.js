@@ -50,38 +50,43 @@ export default function Header() {
     <>
       <div className='container'>
         <nav
-          className='navbar navbar-expand-lg navbar-dark bg-dark'
+          className='navbar navbar-expand-lg'
           // style={{background: 'rgba(204, 204, 204, 0.5)'}}>
           style={navBar}
         >
           <div className='container-fluid'>
-            <Link className='navbar-brand' smooth to='#home'>
-              <img src={logo} width='110px' alt='Ethrtainment' />
+            <Link className='navbar-brand' style={{color:'black'}} smooth to='#home'>
+              <img
+                src={logo}
+                width='110px'
+                style={{ fontSize: '22px', fontWeight: 'bold' }}
+                alt='Ethrtainment'
+              />
               EthrtainmentLive
             </Link>
             <ul className='nav justify-content-center'>
               <li className='nav-item'>
-                <Link smooth to='#home' className='nav-link'>
+                <Link smooth to='#home' className='nav-link'  style={{color: 'black'}}>
                   Home
                 </Link>
               </li>
               <li className='nav-item'>
-                <Link smooth to='#how' className='nav-link'>
+                <Link smooth to='#how' className='nav-link' style={{color: 'black'}}>
                   How It Works
                 </Link>
               </li>
               <li className='nav-item'>
-                <Link smooth to='#events' className='nav-link'>
+                <Link smooth to='#events' className='nav-link' style={{color: 'black'}}>
                   Events
                 </Link>
               </li>
               <li className='nav-item'>
-                <Link smooth to='#stream' className='nav-link'>
+                <Link smooth to='#stream' className='nav-link' style={{color: 'black'}}>
                   Streaming
                 </Link>
               </li>
               <li className='nav-item'>
-                <Link smooth to='#contact' className='nav-link'>
+                <Link smooth to='#contact' className='nav-link' style={{color: 'black'}}>
                   Contact
                 </Link>
               </li>
