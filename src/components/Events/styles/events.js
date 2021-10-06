@@ -3,7 +3,7 @@ export const container = {
   flexDirection: 'column',
   justifyContent: 'center',
   maxHeight: 'none',
-  paddingTop: '110px'
+  paddingTop: '120px'
 };
 
 export const rows = {
