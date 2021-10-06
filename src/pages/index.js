@@ -1,4 +1,2 @@
-export { default as Home } from './Home/index';
-export { default as About } from './About/index';
-export { default as Events } from './Events/index';
-export { default as Stream } from './Stream/index';
+export { default as Streamer } from './Streamer/index';
+export { default as Viewer } from './Viewer/index';

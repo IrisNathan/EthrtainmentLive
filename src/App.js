@@ -1,8 +1,9 @@
 import React from 'react';
+import { BrowserRouter as Router, Switch } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Header, Footer, Hero, How, Events, Stream } from './components';
-// import { } from './pages';
-// import * as ROUTES from './constants/routes';
+import { Streamer, Viewer } from './pages';
+import * as ROUTES from './constants/routes';
 import './App.css';
 
 function App() {
@@ -13,6 +14,8 @@ function App() {
       <How />
       <Events />
       <Stream />
+      <Streamer />
+      <Viewer />
       <Footer />
     </div>
   );

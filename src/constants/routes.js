@@ -1,6 +1,2 @@
-export const ROUTES = {
-  home: '/',
-  about: '/how',
-  events: '/events',
-  stream: '/stream'
-}
+export const STREAMER = '/streamer';
+export const VIEWER = '/viewer';

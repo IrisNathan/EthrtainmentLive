@@ -63,7 +63,7 @@ export default function Stream() {
           </Row>
         </Container>
       </div>
-      <div><Button style={button}>Click to Stream</Button></div>
+      <div><Button href='https://livepeer.com/dashboard/streams' target='_blank' style={button}>Click to Stream</Button></div>
       
     </>
   );
