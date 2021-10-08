@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { APP_STATES } from '../../utils/types';
 import AppBody from '../../components/AppBody';
 import { createStream, getStreamStatus } from '../../utils/apiFactory';
+import apiCall from '../api/stream';
 
 const INITIAL_STATE = {
   appState: APP_STATES.API_KEY,

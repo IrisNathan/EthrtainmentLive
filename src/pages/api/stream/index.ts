@@ -7,7 +7,7 @@ import axios from "axios";
  * Ingest URL: rtmp://rtmp.livepeer.com/live/{stream-key}
  * Playback URL: https://cdn.livepeer.com/hls/{playbackId}/index.m3u8
  */
-export default async (req, res) => {
+const apiCall = async (req, res) => {
   if (req.method === "POST") {
     const authorizationHeader = req.headers && req.headers["authorization"];
     const streamName = req.body && req.body.name;
@@ -46,3 +46,4 @@ export default async (req, res) => {
     }
   }
 };
+export default apiCall;
