@@ -46,4 +46,4 @@ const apiCall = async (req, res) => {
     }
   }
 };
-export default apiCall;
+// export default apiCall;

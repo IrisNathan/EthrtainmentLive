@@ -1,178 +1,247 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { APP_STATES } from '../../utils/types';
-import AppBody from '../../components/AppBody';
-import { createStream, getStreamStatus } from '../../utils/apiFactory';
-import apiCall from '../api/stream';
+import { Client } from '@livepeer/webrtmp-sdk';
 
-const INITIAL_STATE = {
-  appState: APP_STATES.API_KEY,
-  apiKey: null,
-  streamId: null,
-  playbackId: null,
-  streamKey: null,
-  streamIsActive: false,
-  error: null,
-};
+function Streamer() {
+  const videoEl = useRef(null);
+  const stream = useRef(null);
 
-const reducer = (state, action) => {
-  switch (action.type) {
-    case 'SUBMIT_API_KEY':
-      return {
-        ...state,
-        appState: APP_STATES.CREATE_BUTTON,
-        apiKey: action.payload.apiKey,
-      };
-    case 'CREATE_CLICKED':
-      return {
-        ...state,
-        appState: APP_STATES.CREATING_STREAM,
-      };
-    case 'STREAM_CREATED':
-      return {
-        ...state,
-        appState: APP_STATES.WAITING_FOR_VIDEO,
-        streamId: action.payload.streamId,
-        playbackId: action.payload.playbackId,
-        streamKey: action.payload.streamKey,
-      };
-    case 'VIDEO_STARTED':
-      return {
-        ...state,
-        appState: APP_STATES.SHOW_VIDEO,
-        streamIsActive: true,
-      };
-    case 'VIDEO_STOPPED':
-      return {
-        ...state,
-        appState: APP_STATES.WAITING_FOR_VIDEO,
-        streamIsActive: false,
-      };
-    case 'RESET_DEMO_CLICKED':
-      return {
-        ...INITIAL_STATE,
-      };
-    case 'INVALID_API_KEY':
-      return {
-        ...state,
-        error: action.payload.message,
-      };
-    default:
-      break;
-  }
-};
+  const streamKey = process.env.REACT_APP_STREAM_KEY;
 
-export default function View() {
-  const [state, dispatch] = React.useReducer(reducer, INITIAL_STATE);
+  useEffect(() => {
+    (async () => {
+      videoEl.current.volume = 0;
 
-  React.useEffect(() => {
-    if (state.appState === APP_STATES.CREATING_STREAM) {
-      (async function () {
-        try {
-          const streamCreateResponse = await createStream(state.apiKey);
-          if (streamCreateResponse.data) {
-            const {
-              id: streamId,
-              playbackId,
-              streamKey,
-            } = streamCreateResponse.data;
-            dispatch({
-              type: 'STREAM_CREATED',
-              payload: {
-                streamId,
-                playbackId,
-                streamKey,
-              },
-            });
-          }
-        } catch (error) {
-          if (error.response.status === 403) {
-            dispatch({
-              type: 'INVALID_API_KEY',
-              payload: {
-                message:
-                  'Invalid API Key. Please try again with right API key!',
-              },
-            });
-          } else {
-            dispatch({
-              type: 'INVALID_API_KEY',
-              payload: {
-                message:
-                  'Something went wrong! Please try again after sometime',
-              },
-            });
-          }
-        }
-      })();
+      stream.current = await navigator.mediaDevices.getUserMedia({
+        video: true,
+        audio: true,
+      });
+
+      videoEl.current.srcObject = stream.current;
+      videoEl.current.play();
+    })();
+  });
+
+  const onButtonClick = async () => {
+
+    if (!stream.current) {
+      alert('Video stream was not started.');
     }
 
-    let interval;
-    if (state.streamId) {
-      interval = setInterval(async () => {
-        const streamStatusResponse = await getStreamStatus(
-          state.apiKey,
-          state.streamId
-        );
-        if (streamStatusResponse.data) {
-          const { isActive } = streamStatusResponse.data;
-          dispatch({
-            type: isActive ? 'VIDEO_STARTED' : 'VIDEO_STOPPED',
-          });
-        }
-      }, 5000);
-    }
+    const client = new Client();
 
-    return () => {
-      clearInterval(interval);
-    };
-  }, [state.appState, state.apiKey, state.streamId]);
+    const session = client.cast(stream.current, streamKey);
+
+    session.on('open', () => {
+      console.log('Stream started.');
+      alert('Stream started; visit Livepeer Dashboard.');
+    });
+
+    session.on('close', () => {
+      console.log('Stream stopped.');
+    });
+
+    session.on('error', (err) => {
+      console.log('Stream error.', err.message);
+    });
+  };
 
   return (
-    <>
-      <main className='container pb-12 h-screen m-auto pt-24 lg:pt-40'>
-        <header className='w-full p-3 flex justify-between items-center fixed top-0 left-0 z-10 bg-white'>
-          <Link to='/'>
-            <button
-              className='border p-2 h-1/2 rounded border-livepeer hover:bg-livepeer hover:text-white'
-              // onClick={() => dispatch({ type: 'RESET_DEMO_CLICKED' })}
-            >
-              Back to Home
-            </button>
-          </Link>
-        </header>
-        <AppBody
-          state={state}
-          setApiKey={(apiKey) =>
-            dispatch({ type: 'SUBMIT_API_KEY', payload: { apiKey } })
-          }
-          createStream={() => dispatch({ type: 'CREATE_CLICKED' })}
-        />
-        <footer className='fixed bottom-0 left-0 w-full h-12 flex items-center justify-center'>
-          Made with the&nbsp;
-          <a
-            href='https://livepeer.com/docs/'
-            className='text-livepeer text-xl'
-          >
-            Livepeer.com
-          </a>
-          &nbsp;API
-        </footer>
-        {state.error && (
-          <div className='bg-black bg-opacity-60 flex items-center justify-center fixed top-0 left-0 h-screen w-screen'>
-            <div className='flex flex-col w-1/3 h-56 bg-white p-12 items-center text-center text-lg rounded'>
-              {state.error}
-              <button
-                className='border p-2 w-1/3 rounded border-livepeer hover:bg-livepeer hover:text-white mt-4'
-                onClick={() => dispatch({ type: 'RESET_DEMO_CLICKED' })}
-              >
-                Retry
-              </button>
-            </div>
-          </div>
-        )}
-      </main>
-    </>
+    <div className='Streamer'>
+      {/* <input
+        className="App-input"
+        ref={inputEl}
+        type="text"
+        placeholder="streamKey"
+      /> */}
+      <video className='App-video' ref={videoEl} />
+      <button className='App-button' onClick={onButtonClick}>
+        Start
+      </button>
+      <Link to='/'>
+        <button className='border p-2 h-1/2 rounded border-livepeer hover:bg-livepeer hover:text-white'>
+          {' '}
+          Back to Home
+        </button>
+      </Link>
+    </div>
   );
 }
 
+export default Streamer;
+// import { Link } from 'react-router-dom';
+// import { APP_STATES } from '../../utils/types';
+// import AppBody from '../../components/AppBody';
+// import { createStream, getStreamStatus } from '../../utils/apiFactory';
+// import apiCall from '../api/stream';
+
+// const INITIAL_STATE = {
+//   appState: APP_STATES.API_KEY,
+//   apiKey: null,
+//   streamId: null,
+//   playbackId: null,
+//   streamKey: null,
+//   streamIsActive: false,
+//   error: null,
+// };
+
+// const reducer = (state, action) => {
+//   switch (action.type) {
+//     case 'SUBMIT_API_KEY':
+//       return {
+//         ...state,
+//         appState: APP_STATES.CREATE_BUTTON,
+//         apiKey: action.payload.apiKey,
+//       };
+//     case 'CREATE_CLICKED':
+//       return {
+//         ...state,
+//         appState: APP_STATES.CREATING_STREAM,
+//       };
+//     case 'STREAM_CREATED':
+//       return {
+//         ...state,
+//         appState: APP_STATES.WAITING_FOR_VIDEO,
+//         streamId: action.payload.streamId,
+//         playbackId: action.payload.playbackId,
+//         streamKey: action.payload.streamKey,
+//       };
+//     case 'VIDEO_STARTED':
+//       return {
+//         ...state,
+//         appState: APP_STATES.SHOW_VIDEO,
+//         streamIsActive: true,
+//       };
+//     case 'VIDEO_STOPPED':
+//       return {
+//         ...state,
+//         appState: APP_STATES.WAITING_FOR_VIDEO,
+//         streamIsActive: false,
+//       };
+//     case 'RESET_DEMO_CLICKED':
+//       return {
+//         ...INITIAL_STATE,
+//       };
+//     case 'INVALID_API_KEY':
+//       return {
+//         ...state,
+//         error: action.payload.message,
+//       };
+//     default:
+//       break;
+//   }
+// };
+
+// export default function View() {
+//   const [state, dispatch] = React.useReducer(reducer, INITIAL_STATE);
+
+//   React.useEffect(() => {
+//     if (state.appState === APP_STATES.CREATING_STREAM) {
+//       (async function () {
+//         try {
+//           const streamCreateResponse = await createStream(state.apiKey);
+//           if (streamCreateResponse.data) {
+//             const {
+//               id: streamId,
+//               playbackId,
+//               streamKey,
+//             } = streamCreateResponse.data;
+//             dispatch({
+//               type: 'STREAM_CREATED',
+//               payload: {
+//                 streamId,
+//                 playbackId,
+//                 streamKey,
+//               },
+//             });
+//           }
+//         } catch (error) {
+//           if (error.response.status === 403) {
+//             dispatch({
+//               type: 'INVALID_API_KEY',
+//               payload: {
+//                 message:
+//                   'Invalid API Key. Please try again with right API key!',
+//               },
+//             });
+//           } else {
+//             dispatch({
+//               type: 'INVALID_API_KEY',
+//               payload: {
+//                 message:
+//                   'Something went wrong! Please try again after sometime',
+//               },
+//             });
+//           }
+//         }
+//       })();
+//     }
+
+//     let interval;
+//     if (state.streamId) {
+//       interval = setInterval(async () => {
+//         const streamStatusResponse = await getStreamStatus(
+//           state.apiKey,
+//           state.streamId
+//         );
+//         if (streamStatusResponse.data) {
+//           const { isActive } = streamStatusResponse.data;
+//           dispatch({
+//             type: isActive ? 'VIDEO_STARTED' : 'VIDEO_STOPPED',
+//           });
+//         }
+//       }, 5000);
+//     }
+
+//     return () => {
+//       clearInterval(interval);
+//     };
+//   }, [state.appState, state.apiKey, state.streamId]);
+
+//   return (
+//     <>
+//       <main className='container pb-12 h-screen m-auto pt-24 lg:pt-40'>
+//         <header className='w-full p-3 flex justify-between items-center fixed top-0 left-0 z-10 bg-white'>
+//           <Link to='/'>
+//             <button
+//               className='border p-2 h-1/2 rounded border-livepeer hover:bg-livepeer hover:text-white'
+//               // onClick={() => dispatch({ type: 'RESET_DEMO_CLICKED' })}
+//             >
+//               Back to Home
+//             </button>
+//           </Link>
+//         </header>
+//         <AppBody
+//           state={state}
+//           setApiKey={(apiKey) =>
+//             dispatch({ type: 'SUBMIT_API_KEY', payload: { apiKey } })
+//           }
+//           createStream={() => dispatch({ type: 'CREATE_CLICKED' })}
+//         />
+//         <footer className='fixed bottom-0 left-0 w-full h-12 flex items-center justify-center'>
+//           Made with the&nbsp;
+//           <a
+//             href='https://livepeer.com/docs/'
+//             className='text-livepeer text-xl'
+//           >
+//             Livepeer.com
+//           </a>
+//           &nbsp;API
+//         </footer>
+//         {state.error && (
+//           <div className='bg-black bg-opacity-60 flex items-center justify-center fixed top-0 left-0 h-screen w-screen'>
+//             <div className='flex flex-col w-1/3 h-56 bg-white p-12 items-center text-center text-lg rounded'>
+//               {state.error}
+//               <button
+//                 className='border p-2 w-1/3 rounded border-livepeer hover:bg-livepeer hover:text-white mt-4'
+//                 onClick={() => dispatch({ type: 'RESET_DEMO_CLICKED' })}
+//               >
+//                 Retry
+//               </button>
+//             </div>
+//           </div>
+//         )}
+//       </main>
+//     </>
+//   );
+// }

@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@burner-wallet/burner-connect-provider": "^0.1.1",
+    "@livepeer/webrtmp-sdk": "^0.2.3",
     "@openzeppelin/contracts": "^4.3.2",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.2.7",
