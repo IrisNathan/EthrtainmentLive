@@ -1,5 +1,5 @@
 export const container = {
-  paddingTop: '210px',
+  paddingTop: '130px',
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',

@@ -8,14 +8,14 @@ export const container = {
 };
 
 export const rows = {
-  marginTop: '80px',
+  marginTop: '30px',
 };
 
 export const heading = {
   fontSize: '40px',
   fontWeight: 'Bold',
   borderBottom: '#30989e 3px solid',
-  marginBottom: '50px',
+  marginBottom: '20px',
 };
 
 export const ptag = {

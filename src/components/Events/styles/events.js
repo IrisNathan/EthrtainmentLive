@@ -7,7 +7,7 @@ export const container = {
 };
 
 export const rows = {
-  marginTop: '50px',
+  marginTop: '10px',
 };
 
 export const heading = {
