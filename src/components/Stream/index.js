@@ -1,6 +1,7 @@
 import React from 'react';
 import { Row, Col, Container, Carousel, Button } from 'react-bootstrap';
-import { container, rows, heading, ptag, button, font} from './styles/stream';
+import { container, rows, heading, ptag, button, font } from './styles/stream';
+import { Link } from 'react-router-dom';
 import streamer1 from '../../photos/streamer1.jpeg';
 import streamer2 from '../../photos/streamer2.jpeg';
 import streamer3 from '../../photos/streamer3.jpeg';
@@ -14,7 +15,8 @@ export default function Stream() {
           <Row style={rows}>
             <Col style={heading}>Want to stream your event?</Col>
             <p style={ptag}>
-              Ask us how and get pricing or click below to connect your wallet to start streaming.
+              Ask us how and get pricing or click below to connect your wallet
+              to start streaming.
             </p>
             <Carousel fade>
               <Carousel.Item>
@@ -63,8 +65,11 @@ export default function Stream() {
           </Row>
         </Container>
       </div>
-      <div><Button href='https://livepeer.com/dashboard/streams' target='_blank' style={button}>Click to Stream</Button></div>
-      
+      <div>
+        <Link to='/streamer'>
+          <Button style={button}>Click to Stream</Button>
+        </Link>
+      </div>
     </>
   );
 }
