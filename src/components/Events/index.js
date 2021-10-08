@@ -1,6 +1,9 @@
 import React from 'react';
+import { BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
+import Viewer from '../../pages/Viewer/index';
 import { Card, CardGroup, Row, Col, Container, Button } from 'react-bootstrap';
 import { container, rows, heading, ptag, button } from './styles/events';
+// import Routes from '../../router';
 import event1 from '../../photos/event1.jpeg';
 import event2 from '../../photos/event2.jpeg';
 import event3 from '../../photos/event3.jpeg';
@@ -34,9 +37,13 @@ export default function Events() {
                   <Button style={button} href='#'>
                     Buy NFT
                   </Button>
-                  <Button style={button} href='#'>
+                 <Router><Link to='/viewer'><Button style={button}>
                     Watch
-                  </Button>
+                  </Button></Link>
+                  <Switch>
+                    <Route path='/viewer' component={Viewer}></Route>
+                  </Switch>
+                  </Router>
                 </div>
               </Card.Footer>
             </Card>

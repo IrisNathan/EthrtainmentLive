@@ -1,20 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { HashLink as Link } from 'react-router-hash-link';
-import { Container, Navbar, Nav, Button } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import WalletConnectProvider from '@walletconnect/web3-provider';
 import BurnerConnectProvider from '@burner-wallet/burner-connect-provider';
 import Fortmatic from 'fortmatic';
 import { providers } from 'ethers';
 import Web3Modal from 'web3modal';
 import logo from '../../photos/EthrLogo-removebg.png';
-import { button, navBar, container } from './styles/header';
+import { button, navBar } from './styles/header';
 
 export default function Header() {
-  // const [isOpen, setisOpen] = useState(false);
-  // const handleToggle = () => {
-  //   setisOpen((prevState) => !prevState);
-  // };
-
+  
   async function connect() {
     const providerOptions = {
       walletconnect: {
