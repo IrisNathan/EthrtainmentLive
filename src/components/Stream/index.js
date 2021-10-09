@@ -3,35 +3,73 @@ import { useHistory } from 'react-router-dom';
 import { Row, Col, Container, Carousel, Button } from 'react-bootstrap';
 import { container, rows, heading, ptag, button, font } from './styles/stream';
 // import { Link } from 'react-router-dom';
-import { ethers } from "ethers";
-import { ethrtainAddress } from "../../config";
+import { ethers } from 'ethers';
+import { ethrtainAddress, mintEventAddress } from '../../config';
+import { create as ipfsHttpClient } from 'ipfs-http-client';
 import Ethrtainment from '../../artifacts/contracts/Ethrtainment.sol/Ethrtainment.json';
-// import MintEvents from "../../artifacts/contracts/MintEvent.sol/MintEvent.json";
+import MintEvents from '../../artifacts/contracts/MintEvent.sol/MintEvent.json';
 import streamer1 from '../../photos/streamer1.jpeg';
 import streamer2 from '../../photos/streamer2.jpeg';
 import streamer3 from '../../photos/streamer3.jpeg';
 import streamer4 from '../../photos/streamer4.jpeg';
+
+const client = ipfsHttpClient('https://ipfs.infura.io:5001/api/v0');
+var url;
 
 
 export default function Stream() {
   const history = useHistory();
 
   async function requestAccount() {
-    await window.ethereum.request({ method: "eth_requestAccounts"});
+    await window.ethereum.request({ method: 'eth_requestAccounts' });
   }
   async function createStream() {
+    const data = (
+      'event',
+      'event1',  
+      {image: streamer1}
+    )
+
+    try {
+      const added = await client.add(data);
+      url = `https://ipfs.infura.io/ipfs/${added.path}`;
+      // after file is uploaded to IPFS path, pass the url to save it on Polygon
+    } catch (error) {
+      console.log('Error uploading file: ', error);
+    }
     // Connect to streamer's wallet
     await requestAccount();
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     // Get account of wallet
     const signer = provider.getSigner();
     // Calling ehtrtainment contract from the blockchain
-    let contract = new ethers.Contract(ethrtainAddress, Ethrtainment.abi, signer);
-    
-    // Calling specific function from the contract
-    let streamFee = await contract.getStreamingFee(); 
-    history.push('/streamer')
-  } 
+    let contract = new ethers.Contract(
+      mintEventAddress,
+      MintEvents.abi,
+      signer
+    );
+    let transaction = await contract.createNFT(url);
+    let tx = await transaction.wait();
+
+    let event = tx.events[0];
+    let value = event.args[1];
+    let tokenId = value.toNumber()
+ 
+    contract = new ethers.Contract(
+      ethrtainAddress,
+      Ethrtainment.abi,
+      signer
+    );
+    let streamFee = await contract.getStreamingFee();
+    transaction = await contract.createEventTickets(
+      mintEventAddress, tokenId, {value: streamFee}
+    )
+
+    // wait for transaction to succeed
+    await transaction.wait();
+    history.push('/streamer');
+  }
+
   return (
     <>
       <div style={container} id='stream'>
@@ -90,10 +128,9 @@ export default function Stream() {
         </Container>
       </div>
       <div>
-          <Button 
-          style={button}
-          onClick={createStream}
-          >Click to Stream</Button>
+        <Button style={button} onClick={createStream}>
+          Click to Stream
+        </Button>
       </div>
     </>
   );
