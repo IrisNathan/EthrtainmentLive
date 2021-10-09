@@ -1,12 +1,49 @@
 import React from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Card, CardGroup, Row, Col, Container, Button } from 'react-bootstrap';
 import { container, rows, heading, ptag, button } from './styles/events';
+import { ethers } from 'ethers';
+import axios from 'axios';
+import Web3Modal from 'web3modal'; 
+import { mintEventAddress, ethrtainAddress } from '../../config';
+import MintEvent from '../../artifacts/contracts/MintEvent.sol/MintEvent.json';
+import Ethrtainment from '../../artifacts/contracts/Ethrtainment.sol/Ethrtainment.json';
 import event1 from '../../photos/event1.jpeg';
 import event2 from '../../photos/event2.jpeg';
 import event3 from '../../photos/event3.jpeg';
 
 export default function Events() {
+    const [nfts, setNfts] = useState([]);
+    
+  async function checkTicket() {
+    // give user wallet options to select
+    const web3Modal = new Web3Modal();
+    // wait for user to select a wallet of their choice
+    const connection = await web3Modal.connect();
+    // Connect to the selected wallet
+    const provider = new ethers.providers.Web3Provider(connection);
+    // access the account / address of the user's wallet
+    const signer = provider.getSigner();
+  
+    const ethrContract = new ethers.Contract(ethrtainAddress, Ethrtainment.abi, signer);
+    const tokenContract = new ethers.Contract(mintEventAddress, MintEvent.abi, provider); // read only 
+    const data = await ethrContract.checkForTicket();
+  
+    const items = await Promise.all(
+      data.map(async i => {
+        const tokenUri = await tokenContract.tokenURI(i.tokenId);
+        const meta = await axios.get(tokenUri); // info from IPFS json info: name descrip, img, etc
+        let item = {
+          tokenId: i.tokenId.toNumber() 
+        };
+        return item;
+      })
+    );
+    setNfts(items);
+  }
+   
+  
   return (
     <>
       <div style={container} id='events'>
@@ -36,7 +73,9 @@ export default function Events() {
                     Buy NFT
                   </Button>
                   <Link to='/viewer'>
-                    <Button style={button}>Watch</Button>
+                    <Button 
+                    onClick={checkTicket}
+                    style={button}>Watch</Button>
                   </Link>
                 </div>
               </Card.Footer>
