@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 
 export default function View() {
+
   return (
     <>
       <div
@@ -13,7 +14,7 @@ export default function View() {
         }}
       >
         <iframe
-          src='https://cdn.jwplayer.com/players/Dm98edcN-8LbVaqEc.html'
+          src={ process.env.REACT_APP_EMBED_URL }
           width='1000px'
           height='500px'
           title='EthrtainmentLive'
