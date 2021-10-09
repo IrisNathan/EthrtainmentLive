@@ -26,8 +26,8 @@ export default function Stream() {
   async function createStream() {
     const data = (
       'event',
-      'event1',  
-      {image: streamer1}
+      'event1' 
+      // {image: streamer1}
     )
 
     try {
@@ -53,16 +53,19 @@ export default function Stream() {
 
     let event = tx.events[0];
     let value = event.args[1];
-    let tokenId = value.toNumber()
+    let tokenId = value
  
     contract = new ethers.Contract(
       ethrtainAddress,
       Ethrtainment.abi,
       signer
     );
+
+    let eventPrice = ethers.utils.parseUnits('0.005', 'ether')
     let streamFee = await contract.getStreamingFee();
+    streamFee = streamFee.toString();
     transaction = await contract.createEventTickets(
-      mintEventAddress, tokenId, {value: streamFee}
+      mintEventAddress, tokenId, eventPrice, {value: streamFee}
     )
 
     // wait for transaction to succeed

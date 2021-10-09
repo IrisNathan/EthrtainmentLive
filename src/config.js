@@ -1,3 +1,3 @@
 // Rinkeby testnet
-export const mintEventAddress="0x6a8Ba9A5893E4FB3227D7703eAC67F72a625f68c"
-export const ethrtainAddress="0xc2b13D2C796aab0BBB90dB9Ad03CE6532D37C0a8"
+export const mintEventAddress="0xfe6eA442Ba0114fFc324653EBb2553F1d7E4aD75"
+export const ethrtainAddress="0x30f8F657172978118Bcf0473f8BcAe07686cF0f8"

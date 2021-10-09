@@ -13,8 +13,6 @@ contract Ethrtainment is ReentrancyGuard {
     Counters.Counter private _itemsSold;
 
     address payable owner;
-    uint256 streamingFee = 0.0001 ether;
-    uint256 eventPrice = 0.05 ether;
 
     constructor() {
         owner = payable(msg.sender);
@@ -42,16 +40,11 @@ contract Ethrtainment is ReentrancyGuard {
         uint256 indexed eventPrice
         // bool isStreaming
     );
-
-    function getStreamingFee() public view returns (uint256) {
-        return streamingFee;
-    }
-
     function createEventTickets(
         address mintEventContract,
-        uint256 tokenId
+        uint256 tokenId,
+        uint256 eventPrice
     ) public payable nonReentrant {
-        require(msg.value >= streamingFee);
         require(eventPrice >= 0.0002 ether, "Price must be minimum 0.0002 ether");
         _eventId.increment();
         uint256 eventId = _eventId.current();
@@ -60,7 +53,7 @@ contract Ethrtainment is ReentrancyGuard {
             eventId,
             tokenId,
             mintEventContract,
-            payable(msg.sender), // seller
+            payable(owner), // seller
             payable(address(0)), // buyer
             eventPrice
             // true
@@ -90,10 +83,10 @@ contract Ethrtainment is ReentrancyGuard {
         payable
         nonReentrant
     {
-        uint256 ticketPrice = streamEvent[eventId].eventPrice;
+        uint256 eventPrice = streamEvent[eventId].eventPrice;
         uint256 tokenId = streamEvent[eventId].tokenId;
         require(
-            msg.value == ticketPrice,
+            msg.value == eventPrice,
             "Please submit the correct amount in order to complete purchase"
         );
 
@@ -105,7 +98,7 @@ contract Ethrtainment is ReentrancyGuard {
         );
         streamEvent[eventId].buyer = payable(msg.sender);
         _itemsSold.increment();
-        payable(owner).transfer(ticketPrice);
+        payable(owner).transfer(eventPrice);
     }
 
     // function isEventStreaming() public view returns (CreatorEvents[] memory) {
