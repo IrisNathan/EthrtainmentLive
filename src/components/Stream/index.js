@@ -27,13 +27,12 @@ export default function Stream() {
     const data = (
       'event',
       'event1' 
-      // {image: streamer1}
     )
 
     try {
       const added = await client.add(data);
       url = `https://ipfs.infura.io/ipfs/${added.path}`;
-      // after file is uploaded to IPFS path, pass the url to save it on Polygon
+
     } catch (error) {
       console.log('Error uploading file: ', error);
     }

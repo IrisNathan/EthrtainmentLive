@@ -53,8 +53,8 @@ contract Ethrtainment is ReentrancyGuard {
             eventId,
             tokenId,
             mintEventContract,
-            payable(owner), // seller
-            payable(address(0)), // buyer
+            payable(msg.sender), 
+            payable(address(0)), 
             eventPrice
             // true
         );
