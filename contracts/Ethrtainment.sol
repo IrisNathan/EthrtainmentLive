@@ -10,7 +10,7 @@ import "hardhat/console.sol";
 contract Ethrtainment is ReentrancyGuard {
     using Counters for Counters.Counter;
     Counters.Counter private _eventId;
-    Counters.Counter private _itemsSold;
+    Counters.Counter private _ticketInfoSold;
 
     address payable owner;
 
@@ -97,9 +97,32 @@ contract Ethrtainment is ReentrancyGuard {
             tokenId
         );
         streamEvent[eventId].buyer = payable(msg.sender);
-        _itemsSold.increment();
+        _ticketInfoSold.increment();
         payable(owner).transfer(eventPrice);
     }
+
+    function checkForTicket() public view returns (CreatorEvents[] memory) {
+    uint totalticketCount = _eventId.current();
+    uint ticketCount = 0;
+    uint currentIndex = 0;
+
+    // find out the size of the array - because no dynamic arrays allowed in Solidity
+    for (uint i = 0; i < totalticketCount; i++) {
+      if (streamEvent[i + 1].buyer == msg.sender) {
+        ticketCount += 1;
+      }
+    }
+    CreatorEvents[] memory ticketInfo = new CreatorEvents[](ticketCount);
+    for (uint i = 0; i < totalticketCount; i++) {
+      if (streamEvent[i + 1].buyer == msg.sender) {
+        uint currentId = streamEvent[i + 1].eventId;
+        CreatorEvents storage currentTicketInfo = streamEvent[currentId];
+        ticketInfo[currentIndex] = currentTicketInfo;
+        currentIndex += 1;
+      }
+    }
+    return ticketInfo;
+  }
 
     // function isEventStreaming() public view returns (CreatorEvents[] memory) {
     //     uint256 totalEventsStreaming = _eventId.current();
