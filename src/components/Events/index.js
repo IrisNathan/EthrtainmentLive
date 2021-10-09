@@ -41,7 +41,7 @@ export default function Events() {
     const items = await Promise.all(
       data.map(async (i) => {
         const tokenUri = await tokenContract.tokenURI(i.tokenId);
-        const meta = await axios.get(tokenUri); // info from IPFS json info: name descrip, img, etc
+        await axios.get(tokenUri);
         let item = {
           tokenId: i.tokenId.toNumber(),
         };
@@ -49,11 +49,8 @@ export default function Events() {
       })
     );
     setNfts(items);
-  }
-  if (nfts.length > 0) {
+    if (nfts.length > 0) return;
     history.push('/viewer');
-  } else {
-    alert('Purchase ticket please');
   }
 
   return (
