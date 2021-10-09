@@ -1,12 +1,11 @@
 import React from 'react';
-import { useState} from 'react';
-
+import { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { Card, CardGroup, Row, Col, Container, Button } from 'react-bootstrap';
 import { container, rows, heading, ptag, button } from './styles/events';
 import { ethers } from 'ethers';
 import axios from 'axios';
-import Web3Modal from 'web3modal'; 
+import Web3Modal from 'web3modal';
 import { mintEventAddress, ethrtainAddress } from '../../config';
 import MintEvent from '../../artifacts/contracts/MintEvent.sol/MintEvent.json';
 import Ethrtainment from '../../artifacts/contracts/Ethrtainment.sol/Ethrtainment.json';
@@ -15,12 +14,10 @@ import event2 from '../../photos/event2.jpeg';
 import event3 from '../../photos/event3.jpeg';
 
 export default function Events() {
-    const [nfts, setNfts] = useState([]);
-    const history = useHistory();
+  const [nfts, setNfts] = useState([]);
+  const history = useHistory();
   async function checkTicket() {
-
-   
-   // give user wallet options to select
+    // give user wallet options to select
     const web3Modal = new Web3Modal();
     // wait for user to select a wallet of their choice
     const connection = await web3Modal.connect();
@@ -28,30 +25,37 @@ export default function Events() {
     const provider = new ethers.providers.Web3Provider(connection);
     // access the account / address of the user's wallet
     const signer = provider.getSigner();
-  
-    const ethrContract = new ethers.Contract(ethrtainAddress, Ethrtainment.abi, signer);
-    const tokenContract = new ethers.Contract(mintEventAddress, MintEvent.abi, provider); // read only 
+
+    const ethrContract = new ethers.Contract(
+      ethrtainAddress,
+      Ethrtainment.abi,
+      signer
+    );
+    const tokenContract = new ethers.Contract(
+      mintEventAddress,
+      MintEvent.abi,
+      provider
+    ); // read only
     const data = await ethrContract.checkForTicket();
-  
+
     const items = await Promise.all(
-      data.map(async i => {
+      data.map(async (i) => {
         const tokenUri = await tokenContract.tokenURI(i.tokenId);
         const meta = await axios.get(tokenUri); // info from IPFS json info: name descrip, img, etc
         let item = {
-          tokenId: i.tokenId.toNumber() 
+          tokenId: i.tokenId.toNumber(),
         };
         return item;
       })
     );
     setNfts(items);
-    }
-    if (nfts.length > 0){
+  }
+  if (nfts.length > 0) {
     history.push('/viewer');
-    } else {
-      alert('Purchase ticket please');
-    }
-    
-  
+  } else {
+    alert('Purchase ticket please');
+  }
+
   return (
     <>
       <div style={container} id='events'>
@@ -80,11 +84,10 @@ export default function Events() {
                   <Button style={button} href='#'>
                     Buy NFT
                   </Button>
-                 
-                    <Button 
-                    onClick={checkTicket}
-                    style={button}>Watch</Button>
-                
+
+                  <Button onClick={checkTicket} style={button}>
+                    Watch
+                  </Button>
                 </div>
               </Card.Footer>
             </Card>

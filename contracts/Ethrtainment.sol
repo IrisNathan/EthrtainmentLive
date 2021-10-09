@@ -35,8 +35,8 @@ contract Ethrtainment is ReentrancyGuard {
         uint256 indexed eventId,
         uint256 indexed tokenId,
         address mintEventContract,
-        address payable seller,
-        address payable buyer,
+        address seller,
+        address buyer,
         uint256 indexed eventPrice
         // bool isStreaming
     );
@@ -71,8 +71,8 @@ contract Ethrtainment is ReentrancyGuard {
             eventId,
             tokenId,
             mintEventContract,
-            payable(msg.sender),
-            payable(address(0)),
+            msg.sender,
+            address(0),
             eventPrice
             // true
         );
