@@ -62,10 +62,8 @@ export default function Stream() {
     );
 
     let eventPrice = ethers.utils.parseUnits('0.005', 'ether')
-    let streamFee = await contract.getStreamingFee();
-    streamFee = streamFee.toString();
     transaction = await contract.createEventTickets(
-      mintEventAddress, tokenId, eventPrice, {value: streamFee}
+      mintEventAddress, tokenId, eventPrice
     )
 
     // wait for transaction to succeed
