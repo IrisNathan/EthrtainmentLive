@@ -1,20 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-
 export default function View() {
-
   return (
     <>
       <div
         style={{
-          paddingTop: '56p',
+          paddingTop: '56px',
           position: 'relative',
           overflow: 'hidden',
         }}
       >
         <iframe
-          src={ process.env.REACT_APP_EMBED_URL }
+          src={process.env.REACT_APP_EMBED_URL}
           width='1000px'
           height='500px'
           title='EthrtainmentLive'

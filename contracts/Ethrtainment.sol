@@ -14,6 +14,7 @@ contract Ethrtainment is ReentrancyGuard {
 
     address payable owner;
     uint256 streamingFee = 0.0001 ether;
+    uint256 eventPrice = 0.05 ether;
 
     constructor() {
         owner = payable(msg.sender);
@@ -27,7 +28,7 @@ contract Ethrtainment is ReentrancyGuard {
         address payable seller;
         address payable buyer;
         uint256 eventPrice;
-        bool isStreaming;
+        // bool isStreaming;
     }
 
     mapping(uint256 => CreatorEvents) private streamEvent;
@@ -35,11 +36,11 @@ contract Ethrtainment is ReentrancyGuard {
     event EthrNFTCreated(
         uint256 indexed eventId,
         uint256 indexed tokenId,
-        address indexed mintEventContract,
+        address mintEventContract,
         address payable seller,
         address payable buyer,
-        uint256 eventPrice,
-        bool isStreaming
+        uint256 indexed eventPrice
+        // bool isStreaming
     );
 
     function getStreamingFee() public view returns (uint256) {
@@ -48,11 +49,10 @@ contract Ethrtainment is ReentrancyGuard {
 
     function createEventTickets(
         address mintEventContract,
-        uint256 tokenId,
-        uint256 eventPrice
+        uint256 tokenId
     ) public payable nonReentrant {
         require(msg.value >= streamingFee);
-        require(eventPrice >= 0.0002 ether, "Price must be minimum 0.02 ether");
+        require(eventPrice >= 0.0002 ether, "Price must be minimum 0.0002 ether");
         _eventId.increment();
         uint256 eventId = _eventId.current();
 
@@ -62,8 +62,8 @@ contract Ethrtainment is ReentrancyGuard {
             mintEventContract,
             payable(msg.sender), // seller
             payable(address(0)), // buyer
-            eventPrice,
-            true
+            eventPrice
+            // true
         );
 
         streamEvent[eventId].eventPrice = eventPrice;
@@ -80,8 +80,8 @@ contract Ethrtainment is ReentrancyGuard {
             mintEventContract,
             payable(msg.sender),
             payable(address(0)),
-            eventPrice,
-            true
+            eventPrice
+            // true
         );
     }
 
@@ -90,10 +90,10 @@ contract Ethrtainment is ReentrancyGuard {
         payable
         nonReentrant
     {
-        uint256 eventPrice = streamEvent[eventId].eventPrice;
+        uint256 ticketPrice = streamEvent[eventId].eventPrice;
         uint256 tokenId = streamEvent[eventId].tokenId;
         require(
-            msg.value == eventPrice,
+            msg.value == ticketPrice,
             "Please submit the correct amount in order to complete purchase"
         );
 
@@ -104,27 +104,26 @@ contract Ethrtainment is ReentrancyGuard {
             tokenId
         );
         streamEvent[eventId].buyer = payable(msg.sender);
-        streamEvent[eventId].isStreaming = true;
         _itemsSold.increment();
-        payable(owner).transfer(eventPrice);
+        payable(owner).transfer(ticketPrice);
     }
 
-    function isEventStreaming() public view returns (CreatorEvents[] memory) {
-        uint256 totalEventsStreaming = _eventId.current();
-        uint256 eventCount = 0;
-        uint256 currentIndex = 0;
+    // function isEventStreaming() public view returns (CreatorEvents[] memory) {
+    //     uint256 totalEventsStreaming = _eventId.current();
+    //     uint256 eventCount = 0;
+    //     uint256 currentIndex = 0;
 
-        CreatorEvents[] memory show = new CreatorEvents[](eventCount);
-        for (uint256 i = 0; i < totalEventsStreaming; i++) {
-            if (streamEvent[i + 1].isStreaming == true) {
-                uint256 currentEventId = i + 1;
-                CreatorEvents storage currentEvent = streamEvent[
-                    currentEventId
-                ];
-                show[currentIndex] = currentEvent;
-                currentIndex += 1;
-            }
-        }
-        return show;
-    }
+    //     CreatorEvents[] memory show = new CreatorEvents[](eventCount);
+    //     for (uint256 i = 0; i < totalEventsStreaming; i++) {
+    //         if (streamEvent[i + 1].isStreaming == true) {
+    //             uint256 currentEventId = i + 1;
+    //             CreatorEvents storage currentEvent = streamEvent[
+    //                 currentEventId
+    //             ];
+    //             show[currentIndex] = currentEvent;
+    //             currentIndex += 1;
+    //         }
+    //     }
+    //     return show;
+    // }
 }
