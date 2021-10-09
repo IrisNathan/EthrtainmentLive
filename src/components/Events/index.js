@@ -1,6 +1,7 @@
 import React from 'react';
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState} from 'react';
+
+import { Link, useHistory } from 'react-router-dom';
 import { Card, CardGroup, Row, Col, Container, Button } from 'react-bootstrap';
 import { container, rows, heading, ptag, button } from './styles/events';
 import { ethers } from 'ethers';
@@ -15,9 +16,11 @@ import event3 from '../../photos/event3.jpeg';
 
 export default function Events() {
     const [nfts, setNfts] = useState([]);
-    
+    const history = useHistory();
   async function checkTicket() {
-    // give user wallet options to select
+
+   
+   // give user wallet options to select
     const web3Modal = new Web3Modal();
     // wait for user to select a wallet of their choice
     const connection = await web3Modal.connect();
@@ -41,8 +44,13 @@ export default function Events() {
       })
     );
     setNfts(items);
-  }
-   
+    }
+    if (nfts.length > 0){
+    history.push('/viewer');
+    } else {
+      alert('Purchase ticket please');
+    }
+    
   
   return (
     <>
@@ -72,11 +80,11 @@ export default function Events() {
                   <Button style={button} href='#'>
                     Buy NFT
                   </Button>
-                  <Link to='/viewer'>
+                 
                     <Button 
                     onClick={checkTicket}
                     style={button}>Watch</Button>
-                  </Link>
+                
                 </div>
               </Card.Footer>
             </Card>
