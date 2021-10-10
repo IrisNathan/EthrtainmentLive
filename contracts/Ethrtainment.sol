@@ -24,7 +24,7 @@ contract Ethrtainment is ReentrancyGuard {
         uint256 tokenId;
         address mintEventContract;
         address payable seller;
-        address payable buyer;
+        address payable owner;
         uint256 eventPrice;
         // bool isStreaming;
     }
@@ -36,7 +36,7 @@ contract Ethrtainment is ReentrancyGuard {
         uint256 indexed tokenId,
         address mintEventContract,
         address seller,
-        address buyer,
+        address owner,
         uint256 indexed eventPrice
         // bool isStreaming
     );
@@ -45,7 +45,6 @@ contract Ethrtainment is ReentrancyGuard {
         uint256 tokenId,
         uint256 eventPrice
     ) public payable nonReentrant {
-        require(eventPrice >= 0.0002 ether, "Price must be minimum 0.0002 ether");
         _eventId.increment();
         uint256 eventId = _eventId.current();
 
@@ -96,7 +95,7 @@ contract Ethrtainment is ReentrancyGuard {
             msg.sender,
             tokenId
         );
-        streamEvent[eventId].buyer = payable(msg.sender);
+        streamEvent[eventId].owner = payable(msg.sender);
         _ticketInfoSold.increment();
         payable(owner).transfer(eventPrice);
     }
@@ -108,13 +107,13 @@ contract Ethrtainment is ReentrancyGuard {
 
     // find out the size of the array - because no dynamic arrays allowed in Solidity
     for (uint i = 0; i < totalticketCount; i++) {
-      if (streamEvent[i + 1].buyer == msg.sender) {
+      if (streamEvent[i + 1].owner == msg.sender) {
         ticketCount += 1;
       }
     }
     CreatorEvents[] memory ticketInfo = new CreatorEvents[](ticketCount);
     for (uint i = 0; i < totalticketCount; i++) {
-      if (streamEvent[i + 1].buyer == msg.sender) {
+      if (streamEvent[i + 1].owner == msg.sender) {
         uint currentId = streamEvent[i + 1].eventId;
         CreatorEvents storage currentTicketInfo = streamEvent[currentId];
         ticketInfo[currentIndex] = currentTicketInfo;
