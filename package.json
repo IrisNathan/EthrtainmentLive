@@ -57,5 +57,8 @@
     "ethereum-waffle": "^3.4.0",
     "ethers": "^5.4.7",
     "prettier": "^2.2.1"
-  }
+  },
+  "homepage": "./",
+  "standard": {
+    "parser": "babel-eslint"
 }
