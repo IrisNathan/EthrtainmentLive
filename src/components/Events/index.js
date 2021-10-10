@@ -4,6 +4,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { Card, CardGroup, Row, Col, Container, Button } from 'react-bootstrap';
 import { container, rows, heading, ptag, button } from './styles/events';
 import { ethers } from 'ethers';
+import { create as ipfsHttpClient } from 'ipfs-http-client';
 import axios from 'axios';
 import Web3Modal from 'web3modal';
 import { mintEventAddress, ethrtainAddress } from '../../config';
@@ -13,7 +14,53 @@ import event1 from '../../photos/event1.jpeg';
 import event2 from '../../photos/event2.jpeg';
 import event3 from '../../photos/event3.jpeg';
 
+const client = ipfsHttpClient('https://ipfs.infura.io:5001/api/v0');
+var url;
+
 export default function Events() {
+  async function buyNFT() {
+  const data = (
+    'event',
+    'event1' 
+  )
+
+  try {
+    const added = await client.add(data);
+    url = `https://ipfs.infura.io/ipfs/${added.path}`;
+
+  } catch (error) {
+    console.log('Error uploading file: ', error);
+  }
+  const provider = new ethers.providers.Web3Provider(window.ethereum);
+    // Get account of wallet
+    const signer = provider.getSigner();
+    // Calling ehtrtainment contract from the blockchain
+    let contract = new ethers.Contract(
+      mintEventAddress,
+      MintEvent.abi,
+      signer
+    );
+    let transaction = await contract.createNFT(url);
+    let tx = await transaction.wait();
+
+    let event = tx.events[0];
+    let value = event.args[1];
+    let tokenId = value
+ 
+    contract = new ethers.Contract(
+      ethrtainAddress,
+      Ethrtainment.abi,
+      signer
+    );
+
+    let eventPrice = ethers.utils.parseUnits('0.005', 'ether')
+    transaction = await contract.createEventTickets(
+      mintEventAddress, tokenId, eventPrice
+    )
+
+    // wait for transaction to succeed
+    await transaction.wait();
+}
   const [nfts, setNfts] = useState([]);
   const history = useHistory();
   async function checkTicket() {
