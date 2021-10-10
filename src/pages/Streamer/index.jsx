@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Client } from '@livepeer/webrtmp-sdk';
+import { streampage, videobox, btn } from "./styles/streamer";
 
 function Streamer() {
   const videoEl = useRef(null);
@@ -47,14 +48,13 @@ function Streamer() {
   };
 
   return (
-    <div className='Streamer'> 
-      <video className='App-video' ref={videoEl} />
-      <button className='App-button' onClick={onButtonClick}>
+    <div className='Streamer' style={streampage}>
+      <video className='App-video' ref={ videoEl } style={ videobox }/>
+      <button className='App-button border p-2 h-1/2 rounded border-livepeer hover:bg-livepeer hover:text-white' onClick={onButtonClick} style={btn}>
         Start
       </button>
       <Link to='/'>
-        <button className='border p-2 h-1/2 rounded border-livepeer hover:bg-livepeer hover:text-white'>
-          {' '}
+        <button className='border p-2 h-1/2 rounded border-livepeer hover:bg-livepeer hover:text-white' style={btn}>
           Back to Home
         </button>
       </Link>
