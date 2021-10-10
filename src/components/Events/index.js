@@ -18,7 +18,7 @@ const client = ipfsHttpClient('https://ipfs.infura.io:5001/api/v0');
 var url;
 
 export default function Events() {
-  async function buyNFT() {
+  async function buyTicket() {
   const data = (
     'event',
     'event1' 
@@ -125,7 +125,9 @@ export default function Events() {
               <Card.Footer>
                 <small className='text-muted'>Stream date Oct 29th </small>
                 <div>
-                  <Button style={button} href='#'>
+                  <Button 
+                  onClick={buyTicket}
+                  style={button} href='#'>
                     Buy NFT
                   </Button>
 
