@@ -40,6 +40,9 @@ This project will be a platform where you can view major (and creator) events th
 
 ![Architecture](assets/EthertainmentLive.jpg)
 
+## Demo Video
+![Demo Video](assets/Ethrtainment.mp4)
+
 ## Setup
 
 Clone repo
