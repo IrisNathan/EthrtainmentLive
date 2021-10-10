@@ -28,13 +28,12 @@ export default function Hero() {
                 </p>
               </Col>
               <h1 style={hOne}>
-                <strong>THE FOUNDATION OF THE DECENTRALIZED WEB</strong>
+                <strong>ETHRTAINMENT LIVE DECENTRALIZED WEB STREAMING</strong>
               </h1>
               <p style={ptag}>
                 <strong>
-                  Substratum is an open-source network that allows anyone to
-                  allocate spare computing resources to make the internet a free
-                  and fair place for the entire world.
+                  EthrtainementLive is a platform for live streaming utilizing blockchain technology by incorporating
+                  protocols by LivePeer and IPFS. Decentralized video streaming gives creators control over their content.
                 </strong>
               </p>
             </Row>

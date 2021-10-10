@@ -117,9 +117,7 @@ export default function Events() {
               <Card.Body>
                 <Card.Title>Concert</Card.Title>
                 <Card.Text>
-                  This is a wider card with supporting text below as a natural
-                  lead-in to additional content. This content is a little bit
-                  longer.
+                  Major concerts and festivals happening now!
                 </Card.Text>
               </Card.Body>
               <Card.Footer>
@@ -142,8 +140,7 @@ export default function Events() {
               <Card.Body>
                 <Card.Title>Hot Air Balloon Festival</Card.Title>
                 <Card.Text>
-                  This card has supporting text below as a natural lead-in to
-                  additional content.{' '}
+                  Outdoor events ready for viewing.
                 </Card.Text>
               </Card.Body>
               <Card.Footer>
@@ -163,9 +160,7 @@ export default function Events() {
               <Card.Body>
                 <Card.Title>Horse Derby</Card.Title>
                 <Card.Text>
-                  This is a wider card with supporting text below as a natural
-                  lead-in to additional content. This card has even longer
-                  content than the first to show that equal height action.
+                  Watch ZED RUN digital horse racing or the Kentucky Derby. BET BIG or GO HOME 
                 </Card.Text>
               </Card.Body>
               <Card.Footer>

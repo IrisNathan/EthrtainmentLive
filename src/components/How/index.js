@@ -10,9 +10,8 @@ export default function How() {
           <Row style={rows}>
             <Col style={heading}>How EthrtainmentLive Works</Col>
             <p style={font}>
-              The Substratum Network is a worldwide collection of nodes that
-              securely delivers content without the need of a VPN or Tor. Here’s
-              how it works:
+              Ehtrtainment streams content through the LivePeer Protocol and
+              distributes the content through the IPFS network.
             </p>
           </Row>
           <Row style={rows}>
@@ -21,10 +20,10 @@ export default function How() {
                 <i style={icons} class='fas fa-laptop'></i>
               </span>
               <br />
-              <h5>User Experience</h5>
+              <h5>Viewer Experience</h5>
               <p style={ptag}>
-                Anyone can host websites or applications using Substratum Host,
-                paying network users to serve content.
+                By purchasing an NFT ticket for a live stream, viewers have the option to tip content creators directly or get
+                paid to watch ads from sponsors.
               </p>
             </Col>
             <Col>
@@ -34,8 +33,8 @@ export default function How() {
               <br />
               <h5>Streamer Experience</h5>
               <p style={ptag}>
-                Nodes forward content from hosts to web users. Everyone who runs
-                a node gets paid in our cryptocurrency to forward content.
+                Easy to set up a live stream whether it's for a major event or
+                you are a content creator.
               </p>
             </Col>
             <Col>
@@ -45,8 +44,8 @@ export default function How() {
               <br />
               <h5>Decentralized Streaming Experience</h5>
               <p style={ptag}>
-                Anyone viewing Substratum-hosted content can see it in their
-                regular web browser with no censorship blocks.
+                Stream directly to viewers without big tech monetizing
+                your content. 
               </p>
             </Col>
           </Row>

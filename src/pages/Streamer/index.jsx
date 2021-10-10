@@ -1,7 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Client } from '@livepeer/webrtmp-sdk';
-import { streampage, videobox, btn } from "./styles/streamer";
+import { Button } from 'react-bootstrap';
+import { button, btn1, videobox, streambtn, streamer } from "./styles/streamer";
 
 function Streamer() {
   const videoEl = useRef(null);
@@ -48,16 +49,21 @@ function Streamer() {
   };
 
   return (
-    <div className='Streamer' style={streampage}>
-      <video className='App-video' ref={ videoEl } style={ videobox }/>
-      <button className='App-button border p-2 h-1/2 rounded border-livepeer hover:bg-livepeer hover:text-white' onClick={onButtonClick} style={btn}>
+    <div className='Streamer' style={streamer}>
+      <video className='App-video' ref={ videoEl } style={videobox}/>
+      <div style={streambtn}>
+      <Button onClick={onButtonClick} style={btn1}>
         Start
-      </button>
+      </Button>
+      <Button style={btn1}>
+        NFT Product Placement
+      </Button>
       <Link to='/'>
-        <button className='border p-2 h-1/2 rounded border-livepeer hover:bg-livepeer hover:text-white' style={btn}>
+        <Button style={button}>
           Back to Home
-        </button>
+        </Button>
       </Link>
+      </div>
     </div>
   );
 }
