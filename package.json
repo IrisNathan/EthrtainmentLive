@@ -14,7 +14,7 @@
     "bootstrap": "^5.1.1",
     "dotenv": "^10.0.0",
     "fortmatic": "^2.2.1",
-    "hardhat": "^2.6.4",
+    "hardhat": "^2.12.5",
     "ipfs-http-client": "^53.0.1",
     "react": "^17.0.2",
     "react-bootstrap": "^2.0.0-rc.0",
